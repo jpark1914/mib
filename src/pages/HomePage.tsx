@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLink } from '../components/ArrowLink';
 import { Eyebrow } from '../components/Eyebrow';
@@ -6,11 +7,47 @@ import { contact, services } from '../siteData';
 
 export function HomePage() {
   usePageMeta('Memphis Security Services', 'Site-specific armed and unarmed security services for Memphis organizations, events, schools, and communities.');
+  const heroRef = useRef<HTMLElement>(null);
+  const heroMediaRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const hero = heroRef.current;
+    const media = heroMediaRef.current;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    if (!hero || !media || reduceMotion.matches) return;
+
+    let animationFrame = 0;
+
+    const updateParallax = () => {
+      animationFrame = 0;
+      const bounds = hero.getBoundingClientRect();
+
+      if (bounds.bottom < 0 || bounds.top > window.innerHeight) return;
+
+      const offset = Math.max(-96, Math.min(96, bounds.top * -0.16));
+      media.style.setProperty('--hero-parallax-y', `${offset}px`);
+    };
+
+    const requestUpdate = () => {
+      if (!animationFrame) animationFrame = window.requestAnimationFrame(updateParallax);
+    };
+
+    updateParallax();
+    window.addEventListener('scroll', requestUpdate, { passive: true });
+    window.addEventListener('resize', requestUpdate);
+
+    return () => {
+      window.removeEventListener('scroll', requestUpdate);
+      window.removeEventListener('resize', requestUpdate);
+      window.cancelAnimationFrame(animationFrame);
+    };
+  }, []);
 
   return (
     <>
-      <section className="hero">
-        <div className="hero-media" role="img" aria-label="Modern multi-family residential building" />
+      <section className="hero" ref={heroRef}>
+        <div className="hero-media" ref={heroMediaRef} role="img" aria-label="Modern multi-family residential building" />
         <div className="hero-shade" />
         <div className="shell hero-content">
           <Eyebrow>Local. Prepared. Professional.</Eyebrow>

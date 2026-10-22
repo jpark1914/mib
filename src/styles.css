@@ -74,7 +74,7 @@ p { text-wrap: pretty; }
 
 .hero { position: relative; min-height: 760px; display: grid; align-items: end; overflow: hidden; color: var(--white); background: var(--navy-950); }
 .hero-media, .hero-shade { position: absolute; inset: 0; }
-.hero-media { background: url("/assets/hero-apartments.jpg") center 42% / cover no-repeat; }
+.hero-media { inset: -110px 0; background: url("/assets/hero-apartments.jpg") center 42% / cover no-repeat; transform: translate3d(0, var(--hero-parallax-y, 0), 0); will-change: transform; }
 .hero-shade { background: linear-gradient(90deg, rgba(5,20,31,.98) 0%, rgba(5,20,31,.89) 38%, rgba(5,20,31,.28) 72%, rgba(5,20,31,.2) 100%), linear-gradient(0deg, rgba(5,20,31,.96) 0%, transparent 36%); }
 .hero::before { position: absolute; z-index: 1; inset: 0; content: ""; opacity: .12; background-image: linear-gradient(rgba(255,255,255,.25) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.25) 1px, transparent 1px); background-size: 72px 72px; mask-image: linear-gradient(to right, black, transparent 75%); }
 .hero-content { position: relative; z-index: 2; padding-top: 140px; padding-bottom: 190px; }
@@ -254,7 +254,7 @@ p { text-wrap: pretty; }
   .shell { width: min(100% - 30px, 1180px); }
   .brand img { width: 46px; height: 46px; }
   .hero { min-height: 830px; }
-  .hero-media { background-position: 56% center; }
+  .hero-media { inset: 0; background-position: 56% center; transform: none; will-change: auto; }
   .hero h1 { font-size: clamp(3.2rem, 15vw, 5.2rem); }
   .hero-shade { background: linear-gradient(90deg, rgba(5,20,31,.98), rgba(5,20,31,.58)), linear-gradient(0deg, rgba(5,20,31,.98), transparent 54%); }
   .hero-actions { align-items: flex-start; flex-direction: column; }
@@ -286,4 +286,5 @@ p { text-wrap: pretty; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .001ms !important; animation-duration: .001ms !important; }
+  .hero-media { inset: 0; transform: none; will-change: auto; }
 }
