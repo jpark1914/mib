@@ -69,3 +69,4 @@ After DNS points to the EC2 Elastic IP, install Certbot and request a certificat
 - `EC2_SSH_KEY`
 
 Configure these secrets in the `production` GitHub environment. The AWS role should trust GitHub OIDC for `repo:jpark1914/mib:environment:production`, with permission limited to authorizing and revoking ingress on the selected security group.
+
