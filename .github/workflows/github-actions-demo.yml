@@ -115,7 +115,7 @@ jobs:
 
           DEPLOY_PORT="${EC2_PORT:-22}"
           DEPLOY_USER="${EC2_USER:-ubuntu}"
-          DEPLOY_PATH="${EC2_DEPLOY_PATH}"
+          DEPLOY_PATH="${EC2_DEPLOY_PATH:-/var/www/mib}"
 
           ssh -i ~/.ssh/ec2_deploy_key -p "${DEPLOY_PORT}" "${DEPLOY_USER}@${EC2_HOST}" "mkdir -p '${DEPLOY_PATH}'"
           rsync -az --delete -e "ssh -i ~/.ssh/ec2_deploy_key -p ${DEPLOY_PORT}" dist/ "${DEPLOY_USER}@${EC2_HOST}:${DEPLOY_PATH}/"
